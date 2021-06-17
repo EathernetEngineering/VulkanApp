@@ -1,0 +1,14 @@
+#ifndef _CONFIG_H
+#define _CONFIG_H
+
+#cmakedefine CEE_OS_WINDOWS
+#cmakedefine CEE_OS_LINUX
+#cmakedefine CEE_OS_MAC
+
+#cmakedefine CEE_WM_XCB
+#cmakedefine CEE_WM_X11
+#cmakedefine CEE_WM_WAYLAND
+#cmakedefine CEE_WM_COCOA
+#cmakedefine CEE_WM_WIN32
+
+#endif

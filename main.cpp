@@ -1,6 +1,15 @@
+#include "pch.h"
 #include <iostream>
 
-int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
-    return 0;
+#include "Application.hpp"
+
+int main(int argc, char** argv) {
+	
+	CEE::Application* pApp = new CEE::Application(argc, argv);
+	
+	int returnVal = pApp->Run();
+	
+	delete pApp;
+	
+	return returnVal;
 }
