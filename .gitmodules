@@ -1,0 +1,6 @@
+[submodule "vendor/glm"]
+	path = vendor/glm
+	url = git@github.com:g-truc/glm
+[submodule "vendor/shaderc"]
+	path = vendor/shaderc
+	url = git@github.com:google/shaderc

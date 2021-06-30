@@ -29,10 +29,10 @@ namespace CEE
 
 #if defined(CEE_OS_WINDOWS)
 		m_Window = new Window((void*)(&s_Connection), 1280, 720, "Vulkan App");
-		m_Renderer = new Renderer(s_Connection, m_Window);
+		m_Renderer = new Renderer(s_Connection, m_Window, RendererCapabilities(9996));
 #elif defined(CEE_WM_XCB)
 		m_Window = new Window((void*)s_Connection, 1280, 720, "Vulkan App");
-		m_Renderer = new Renderer(s_Connection, m_Window);
+		m_Renderer = new Renderer(s_Connection, m_Window, RendererCapabilities(9996));
 #endif
 		
 		m_Window->SetDestroyWindowCallback([this](Window* window){
@@ -54,6 +54,9 @@ namespace CEE
 		m_Running = true;
 		while (m_Running)
 		{
+			m_Renderer->BeginScene(m_Camera);
+			m_Renderer->DrawQuad({ 0.0f, 0.0f }, { 0.5f, 0.5f }, 0.0f);
+			m_Renderer->EndScene();
 			m_Window->PollEvents();
 		}
 		return 0;

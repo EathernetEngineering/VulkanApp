@@ -139,7 +139,7 @@ namespace CEE {
 				{
 					if (pWindow->m_KeyCallback)
 					{
-						int key = TranslateKey(wParam);
+						int key = TranslateKey((uint32_t)wParam);
 						int mods = TranslateState(0);
 						pWindow->m_KeyCallback(pWindow, (int)(uint8_t)(lParam >> 16), key, KEY_ACTION_PRESSED, mods);
 					}
@@ -150,7 +150,7 @@ namespace CEE {
 				{
 					if (pWindow->m_KeyCallback)
 					{
-						int key = TranslateKey(wParam);
+						int key = TranslateKey((uint32_t)wParam);
 						int mods = TranslateState(0);
 						pWindow->m_KeyCallback(pWindow, (int)(uint8_t)(lParam >> 16), key, KEY_ACTION_RELEASED, mods);
 					}

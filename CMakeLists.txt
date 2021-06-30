@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.2)
 
 project(VulkanApp VERSION 1.0.0 LANGUAGES CXX)
 
-add_executable(VulkanApp main.cpp Application.cpp Window.cpp Renderer.cpp Application.hpp Window.hpp Renderer.hpp)
+add_executable(VulkanApp main.cpp Application.cpp Window.cpp Renderer.cpp Application.hpp
+	Window.hpp Renderer.hpp Shader.cpp Shader.hpp camera.cpp camera.hpp base.hpp)
 
 find_package(Vulkan REQUIRED)
 target_link_libraries(VulkanApp ${Vulkan_LIBRARIES})
@@ -30,7 +31,10 @@ set(CEE_OS_MAC ON)
 set(CEE_WM_COCOA ON)
 endif()
 
+add_subdirectory(vendor/shaderc)
+
 configure_file(config.h.in config.h)
 
-target_include_directories(VulkanApp PRIVATE build/ ${Vulkan_INCLUDE_DIRS})
+target_include_directories(VulkanApp PRIVATE build/ ${Vulkan_INCLUDE_DIRS} vendor/glm vendor/shaderc/libshaderc/include)
+target_link_libraries(VulkanApp shaderc)
 target_precompile_headers(VulkanApp PRIVATE pch.h)

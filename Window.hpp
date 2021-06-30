@@ -18,6 +18,9 @@ namespace CEE {
 		~Window();
 		
 		void PollEvents();
+
+		inline uint32_t GetWidth()  const { return m_Width;  }
+		inline uint32_t GetHeight() const { return m_Height; }
 		
 		/* EVENT SYSTEM */
 		
@@ -59,12 +62,16 @@ namespace CEE {
 	private:
 #if defined(CEE_OS_WINDOWS)
 		HWND m_Window;
-		HWND GetNativeWindowPtr() { return m_Window; }
+	public:
+		inline HWND GetNativeWindowPtr() { return m_Window; }
+	private:
 		static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 #elif defined(CEE_WM_XCB)
 		xcb_screen_t* m_Screen;
 		xcb_window_t m_Window;
-		xcb_window_t GetNativeWindowPtr() { return m_Window; }
+	public:
+		inline xcb_window_t GetNativeWindowPtr() { return m_Window; }
+	private:
 		xcb_atom_t m_WindowCloseAtom;
 #endif
 	

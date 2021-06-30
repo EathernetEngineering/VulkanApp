@@ -3,6 +3,7 @@
 
 #include "Window.hpp"
 #include "Renderer.hpp"
+#include "Camera.hpp"
 
 namespace CEE {
 	class Application
@@ -26,6 +27,8 @@ namespace CEE {
 		bool m_Running = false;
 		
 		Renderer* m_Renderer = nullptr;
+
+		Camera m_Camera;
 		
 	private:
 		static Application* s_Instance;
