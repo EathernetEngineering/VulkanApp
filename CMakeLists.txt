@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 project(VulkanApp VERSION 1.0.0 LANGUAGES CXX)
 
 add_executable(VulkanApp main.cpp Application.cpp Window.cpp Renderer.cpp Application.hpp
-	Window.hpp Renderer.hpp Shader.cpp Shader.hpp camera.cpp camera.hpp base.hpp)
+	Window.hpp Renderer.hpp Shader.cpp Shader.hpp Camera.cpp Camera.hpp base.hpp)
 
 find_package(Vulkan REQUIRED)
 target_link_libraries(VulkanApp ${Vulkan_LIBRARIES})

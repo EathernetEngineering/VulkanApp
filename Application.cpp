@@ -24,7 +24,10 @@ namespace CEE
 		s_Connection = GetModuleHandle(NULL);
 #elif defined(CEE_WM_XCB)
 		s_Connection = xcb_connect(nullptr, nullptr);
-		if (xcb_connection_has_error(s_Connection)) throw;
+		if (xcb_connection_has_error(s_Connection))
+		{
+			fprintf(stderr, "XCB connection has error.\n");
+		}
 #endif
 
 #if defined(CEE_OS_WINDOWS)

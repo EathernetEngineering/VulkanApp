@@ -105,6 +105,8 @@ namespace CEE
 		
 #if defined(NDEBUG)
 		m_Validate = false;
+#else
+		m_Validate = true;
 #endif
 		
 		vk::Bool32 validationFound = VK_FALSE;
@@ -182,14 +184,14 @@ namespace CEE
 		CEE_ASSERT(surfaceExtFound && platformExtFound);
 
 		auto const appInfo = vk::ApplicationInfo()
-			.setApiVersion(VK_VERSION_1_2)
+			.setApiVersion(VK_MAKE_API_VERSION(0, 1, 2, 0))
 			.setApplicationVersion(0)
 			.setEngineVersion(0)
 			.setPEngineName("Vulkan Engine")
 			.setPApplicationName("Vulkan Application");
 
 		auto instanceCreateInfo = vk::InstanceCreateInfo()
-			.setPApplicationInfo(&appInfo);
+			.setPApplicationInfo(&appInfo).setFlags(vk::InstanceCreateFlags()).setPNext(nullptr);
 		
 		instanceCreateInfo.setEnabledLayerCount(static_cast<uint32_t>(m_EnabledLayerNames.size()));
 		if (m_EnabledLayerNames.size() > 0)
@@ -254,7 +256,7 @@ namespace CEE
 			.setConnection(s_Connection).setWindow(m_Window->GetNativeWindowPtr());
 
 		auto result = m_Instance.createXcbSurfaceKHR(&surfaceCreateInfo, nullptr, &m_Surface);
-		ASSERT_WITH_MESSAGE(result == vk::Result::eSuccess, "Failed to create XCB surface.");;
+		CEE_ASSERT_WITH_MESSAGE(result == vk::Result::eSuccess, "Failed to create XCB surface.");;
 #endif
 	}
 	
@@ -1052,6 +1054,7 @@ namespace CEE
 					return true;
 				}
 			}
+			typeBits >>= 1;
 		}
 		return false;
 	}
