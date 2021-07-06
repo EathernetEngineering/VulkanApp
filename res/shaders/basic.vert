@@ -12,7 +12,7 @@ layout(location = 0) out vec4 fragColor;
 
 void main()
 {
-	gl_Position = u_MVP.mvpMatrix * position;
+	gl_Position = /*u_MVP.mvpMatrix */ position;
 	fragColor = color;
 }
 

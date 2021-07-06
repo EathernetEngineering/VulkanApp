@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
 project(VulkanApp VERSION 1.0.0 LANGUAGES CXX)
+set(CMAKE_CXX_STANDARD_REQUIRED 17)
 
 add_executable(VulkanApp main.cpp Application.cpp Window.cpp Renderer.cpp Application.hpp
 	Window.hpp Renderer.hpp Shader.cpp Shader.hpp Camera.cpp Camera.hpp base.hpp)

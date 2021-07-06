@@ -39,6 +39,8 @@ namespace CEE
 
 	void Renderer::InitalizeRenderer()
 	{
+		m_PolygonMode = vk::PolygonMode::eFill;
+		
 		InitalizeInstance();
 		InitalizeSurface();
 		InitalizeDevice();
@@ -887,15 +889,18 @@ namespace CEE
 			uint16_t* indices = (uint16_t*)malloc(memoryRequirements.size);
 			CEE_ASSERT(indices != NULL);
 
+			uint16_t offset = 0;
 			for (uint16_t i = 0; i < m_Capabilities.maxIndices - 6; i += 6)
 			{
-				indices[i + 0] = i + 0;
-				indices[i + 1] = i + 1;
-				indices[i + 2] = i + 2;
+				indices[i + 0] = offset + 0;
+				indices[i + 1] = offset + 1;
+				indices[i + 2] = offset + 2;
 
-				indices[i + 3] = i + 2;
-				indices[i + 4] = i + 3;
-				indices[i + 5] = i + 0;
+				indices[i + 3] = offset + 2;
+				indices[i + 4] = offset + 3;
+				indices[i + 5] = offset + 0;
+				
+				offset += 4;
 			}
 			memcpy(m_IndexBuffer.cpuMemoryPtr, indices, memoryRequirements.size);
 			free(indices);
@@ -925,9 +930,9 @@ namespace CEE
 		auto const inputAssemblyStateCreateInfo = vk::PipelineInputAssemblyStateCreateInfo()
 			.setPrimitiveRestartEnable(VK_FALSE)
 			.setTopology(vk::PrimitiveTopology::eTriangleList);
-
+			
 		auto const rasterizationStateCreateInfo = vk::PipelineRasterizationStateCreateInfo()
-			.setPolygonMode(vk::PolygonMode::eFill)
+			.setPolygonMode(m_PolygonMode)
 			.setCullMode(vk::CullModeFlagBits::eBack)
 			.setFrontFace(vk::FrontFace::eCounterClockwise)
 			.setDepthClampEnable(VK_FALSE)
@@ -1200,7 +1205,8 @@ namespace CEE
 		m_Vertices.clear();
 	}
 
-	void Renderer::DrawQuad(glm::vec2 translation, glm::vec2 scale, float rotationAngle)
+	void Renderer::DrawQuad(glm::vec2 translation = { 0.0f, 0.0f }, glm::vec2 scale = { 1.0f, 1.0f },
+							float rotationAngle = 0, glm::vec4 color  = { 1.0f, 1.0f, 1.0f, 1.0f })
 	{
 		glm::mat4 transformation = glm::scale(glm::identity<glm::mat4>(), glm::vec3(scale, 1.0f));
 		transformation = glm::rotate(transformation, rotationAngle, glm::vec3(0.0f, 0.0f, 1.0f));
@@ -1208,12 +1214,12 @@ namespace CEE
 		for (uint32_t i = 0; i < 4; i++)
 		{
 			Vertex vertex;
-			vertex.position = g_QuadVertices[i].position * transformation;
-			vertex.color = g_QuadVertices[i].color;
+			vertex.position = transformation * g_QuadVertices[i].position;
+			vertex.color = color;
 			vertex.normal = g_QuadVertices[i].position;
 			m_Vertices.push_back(vertex);
 		}
-		m_Statistics.verices += 4;
+		m_Statistics.vertices += 4;
 		m_Statistics.indices += 6;
 		m_Statistics.quads++;
 	}

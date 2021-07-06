@@ -58,7 +58,8 @@ namespace CEE
 		while (m_Running)
 		{
 			m_Renderer->BeginScene(m_Camera);
-			m_Renderer->DrawQuad({ 0.0f, 0.0f }, { 0.5f, 0.5f }, 0.0f);
+			m_Renderer->DrawQuad({ -0.5f, 0.0f }, { 0.5f, 0.5f }, 0.0f, { 1.0f, 0.0f, 0.6f, 1.0f });
+			m_Renderer->DrawQuad({ 0.5f, 0.0f }, { 0.5f, 0.5f }, 0.0f, { 0.2f, 1.0f, 0.5f, 1.0f });
 			m_Renderer->EndScene();
 			m_Window->PollEvents();
 		}

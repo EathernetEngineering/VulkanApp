@@ -74,7 +74,7 @@ namespace CEE
 		uint32_t drawCalls;
 		
 		size_t indices;
-		size_t verices;
+		size_t vertices;
 
 		size_t quads;
 	} RendererStatistics;
@@ -92,7 +92,7 @@ namespace CEE
 		void BeginScene(Camera& camera);
 		void EndScene();
 
-		void DrawQuad(glm::vec2 translation, glm::vec2 scale, float rotationAngle);
+		void DrawQuad(glm::vec2 translation, glm::vec2 scale, float rotationAngle, glm::vec4 color);
 		
 	private:
 		void InitalizeRenderer();
@@ -196,6 +196,8 @@ namespace CEE
 		glm::mat4 m_Model, m_View, m_Projection;
 
 		std::vector<Vertex> m_Vertices;
+		
+		vk::PolygonMode m_PolygonMode;
 	};
 }
 
